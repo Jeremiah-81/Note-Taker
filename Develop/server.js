@@ -2,6 +2,7 @@
 // const { response } = require('express');
 const express = require('express');
 const fs = require('fs');  
+const { METHODS } = require('http');
 // const path = require('path');
 
   //// Begin the sequence to start the application and create a port. ////
@@ -52,5 +53,42 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete Route
+app.delete("/api/notes/:id", function (req, res) {
+  const noteId = JSON.parse(req.params.id)
+  console.log(noteId)
+  fs.readFile(__dirname + "/db/db.json", 'utf8', function (error, notes) {
+    if (error) {
+      return console.log(error)
+    }
+    notes = JSON.parse(notes)
 
+    notes = notes.filter(val => val.id !== noteId)
+
+    fs.writeFile(__dirname + "/db/db.json", JSON.stringify(notes), function (error, data) {
+      if (error) {
+        return error
+      }
+      res.json(notes)
+    })
+  })
+})
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+
+
+// -------------------Comments and methods below this line---------------------
+
+
+
+
+///// this is another way I can try the delete method.//////
+
+// app.delete('/expressions/:id',(req,res,next)=>{
+//   const eleIndex = getIndexById(req.params.id,expressions);
+// if(eleIndex!==-1){
+//     expressions.splice(eleIndex,1);
+//     res.status(204).send(expressions[eleIndex]);
+// }
+// else{
+//     res.status(404).send();
+// }
+// });
