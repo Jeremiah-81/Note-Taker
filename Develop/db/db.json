@@ -1,15 +1,1 @@
-[
-    {
-        "title":"Test Title",
-        "text":"Test text",
-        "note": "Water is life"
-    },
-
-    {
-        "title":"Science of water",
-        "text":"Two parts hydrogen + One part oxygen",
-        "note": "One water molecule"
-    }
-
-    
-]
+[{"title":"Test Title","text":"Test text","note":"Water is life"},{"title":"Science of water","text":"Two parts hydrogen + One part oxygen","note":"One water molecule"},{"title":"Get Groceries","text":"Store"}]

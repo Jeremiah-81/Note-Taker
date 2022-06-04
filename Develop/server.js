@@ -3,7 +3,7 @@
 const express = require('express');
 const fs = require('fs');  
 const { METHODS } = require('http');
-// const path = require('path');
+const path = require('path');
 
   //// Begin the sequence to start the application and create a port. ////
 const app = express();
@@ -42,7 +42,7 @@ app.get('/notes', (req, res) =>
 app.post('/api/notes', (req, res) => {
   fs.readFile('./db/db.json', 'utf-8', (err, data) => {
     if (err) throw err;
-    const parsedData = JSON.parse(data);
+    const parsedData = JSON.parse(data); 
     const newNote = req.body;
     parsedData.push(newNote);
     fs.readFile('./db/db.json', JSON.stringify(parsedData), (err) => {

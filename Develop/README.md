@@ -1,6 +1,10 @@
-### Note
+# Note-Taker
+
+This is an appliation designed as a remind to you of whats to come in our busy lives. 
 
 ## Motivation
+
+Sometimes we forget or dont easely remember whats next on our agenda so this note taker can remind us of what we need to do.
 
 
 
@@ -10,20 +14,20 @@ https://raw.githubusercontent.com/Jeremiah-81/Note-Taker/main/Develop/11-express
 
 ## Tech/Framework
 
-
+JSON 
 
 ### How to Use
 
 
 ## Features
 
-
+You can easely write, save and delete any note all from the same page with just one click.
 
 ### Credit
 
 https://www.thiscodeworks.com/app-delete-how-to-use-delete-in-express-and-set-up-route-node/612ddb940032010015329851
 
-
+## This README was generated with ❤️ by: 
 
 <!--------------------------------- try this to delete the notes------------------------------ -->
 <!-- 
