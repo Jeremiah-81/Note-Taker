@@ -1,5 +1,4 @@
-// The-Real-Note-Taker-homework II 
-// const { response } = require('express');
+// The-Real-Note-Taker-homework
 const express = require('express');
 const fs = require('fs');  
 const { METHODS } = require('http');
@@ -53,25 +52,32 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete Route
-app.delete("/api/notes/:id", function (req, res) {
-  const noteId = JSON.parse(req.params.id)
-  console.log(noteId)
-  fs.readFile(__dirname + "/db/db.json", 'utf8', function (error, notes) {
-    if (error) {
-      return console.log(error)
-    }
-    notes = JSON.parse(notes)
+app.post('/api/notes',(req, res) => {
+    const newNote = createNewNote(req.body, allNotes)
+    res.json(newNote);
+});
+  
+function deleteNote(id, notesArray) {
+  for (let i = 0; i < notesArray.length; i++) {
+  let note = notesArray[i];
 
-    notes = notes.filter(val => val.id !== noteId)
+  if (note.id == id) {
+      notesArray.splice(i, 1);
+    fs.writeFileSync(
+      path.join(__dirname, './db/db.json'),
+      JSON.stringify(notesArray, null, 2)
+    );
 
-    fs.writeFile(__dirname + "/db/db.json", JSON.stringify(notes), function (error, data) {
-      if (error) {
-        return error
-      }
-      res.json(notes)
-    })
-  })
-})
+     break;
+    } 
+  }
+}
+
+app.delete('/api/notes/:id', (req, res)  => {
+    deleteNote(req.params.id, allNotes);
+    res.json(true); 
+});
+
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 
 
@@ -92,3 +98,23 @@ app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 //     res.status(404).send();
 // }
 // });
+
+// app.delete("/api/notes/:id", function (req, res) {
+//   const noteId = JSON.parse(req.params.id)
+//   console.log(noteId)
+//   fs.readFile(__dirname + "/db/db.json", 'utf8', function (error, notes) {
+//     if (error) {
+//       return console.log(error)
+//     }
+//     notes = JSON.parse(notes)
+
+//     notes = notes.filter(val => val.id !== noteId)
+
+//     fs.writeFile(__dirname + "/db/db.json", JSON.stringify(notes), function (error, data) {
+//       if (error) {
+//         return error
+//       }
+//       res.json(notes)
+//     })
+//   })
+// })
