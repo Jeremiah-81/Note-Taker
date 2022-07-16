@@ -52,30 +52,25 @@ app.post('/api/notes', (req, res) => {
 });
 
 // Delete Route
-app.post('/api/notes',(req, res) => {
-    const newNote = createNewNote(req.body, allNotes)
-    res.json(newNote);
-});
-  
-function deleteNote(id, notesArray) {
-  for (let i = 0; i < notesArray.length; i++) {
-  let note = notesArray[i];
-
-  if (note.id == id) {
-      notesArray.splice(i, 1);
-    fs.writeFileSync(
-      path.join(__dirname, './db/db.json'),
-      JSON.stringify(notesArray, null, 2)
-    );
-
-     break;
-    } 
-  }
-}
-
-app.delete('/api/notes/:id', (req, res)  => {
-    deleteNote(req.params.id, allNotes);
-    res.json(true); 
+app.delete('/api/notes/:id', (req, res) =>{
+  fs.readFile('./db/db.json', 'utf-8', (err, notes) =>{
+    if (err) throw err;
+    const { id } = req.params;
+    let allNotes = JSON.parse(notes);
+    const isDeleted = allNotes.find(note => note.id === parseInt(id));
+    if (isDeleted){
+      notes = allNotes.filter(note => note.id !== parseInt(id));
+      fs.writeFile('./db/db.json', JSON.stringify(notes), (err) => {
+        if (err) throw err;
+        res.status(200).json(notes);
+      });
+      console.log(notes)
+    } else {
+      res
+        .status(404)
+        .json({message: 'Is this message deleted?'});
+    }
+  });
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
