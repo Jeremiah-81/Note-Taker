@@ -40,6 +40,7 @@ app.post("/api/notes", (req, res) => {
     if (err) throw err;
     const parsedData = JSON.parse(data);
     const newNote = req.body;
+    console.log(req);
     parsedData.push(newNote);
     fs.writeFile("./db/db.json", JSON.stringify(parsedData), (err) => {
       if (err) throw err;
